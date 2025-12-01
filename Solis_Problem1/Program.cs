@@ -32,51 +32,64 @@ namespace Solis_Problem1
                 switch (choice)
                 {
                     case 1:
-                        Console.Write("Enter key to add: ");
-                        int keyAdd = Convert.ToInt32(Console.ReadLine());
+                        Console.Write("Enter character name: ");
+                        string characterName = Console.ReadLine();
 
-                        if (myRec.Contains(keyAdd))
+                        if (string.IsNullOrEmpty(characterName))
                         {
-                            Console.WriteLine("No key duplication");
+                            Console.WriteLine("Character is empty");
+                        }
+                        else if (Movies.ContainsKey(characterName))
+                        {
+                            Console.WriteLine("No character duplication!");
                         }
                         else
                         {
-                            Console.Write("Enter value to add: ");
-                            string valueAdd = Console.ReadLine();
-                            myRec.Add(keyAdd, valueAdd);
-                            Console.WriteLine("Data has been succesfully added");
+                            Console.Write("Enter movie title: ");
+                            string movieTitle = Console.ReadLine();    
+                            Movies.Add(characterName, movieTitle); 
                         }
+                        Console.Write("Enter character role: ");
+                        string characterRole = Console.ReadLine();
+
+                        Console.Write("Enter signature qoute: ");
+                        string signatureQoute = Console.ReadLine();
+
+                        Movies.Add(characterName, characterRole);
+                        Movies.Add(characterName,signatureQoute);
+                        Console.WriteLine("Character has been added succesfully!");
                         break;
 
-                    case 2:
-                        Console.Write("Enter key to remove: ");
-                        int key = Convert.ToInt32(Console.ReadLine());
+                        
+                    //case 2:
+                        Console.Write("Enter character name to remove: ");
+                        string characterNameRemove = Console.ReadLine();
 
-                        if (myRec.Contains(key))
-                        {
-                            myRec.Remove(key);
-                            Console.WriteLine("Data has been succesfully removed");
-                        }
-                        else
-                        {
-                            Console.WriteLine("The key does not exist");
-                        }
-                        break;
+                       // if (myRec.ContainsKey(key))
+                     //   {
+                        //    myRec.Remove(key);
+                        //    Console.WriteLine("Data has been succesfully removed");
+                       // }
+                        //else
+                        //{
+                         //   Console.WriteLine("The key does not exist");
+                       // }
+                      //  break;
 
-                    case 3:
-                        if (myRec.Count == 0)
-                        {
-                            Console.WriteLine("No Data in the Record Keeping System");
-                        }
-                        else
-                        {
-                            Console.WriteLine("\t-Key\t-Value-");
-                            foreach (KeyValuePair<int, string> i in myD)
-                            {
-                                Console.WriteLine($"\t{i.Key}\t{i.Value}");
-                            }
-                        }
-                        break;
+                   // case 3:
+                       // if (myRec.Count == 0)
+                       // {
+                         //   Console.WriteLine("No Data in the Record Keeping System");
+                       // }
+                       // else
+                       // {
+                           // Console.WriteLine("\t-Key\t-Value-");
+                           // foreach (KeyValuePair<int, string> i in myD)
+                           // {
+                           //     Console.WriteLine($"\t{i.Key}\t{i.Value}");
+                          //  }
+                        //}
+                        // break;
 
                     case 4:
 
