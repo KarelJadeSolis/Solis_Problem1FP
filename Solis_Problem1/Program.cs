@@ -35,29 +35,31 @@ namespace Solis_Problem1
                         Console.Write("Enter character name: ");
                         string characterName = Console.ReadLine();
 
-                        if (string.IsNullOrEmpty(characterName))
+                        if (Movies.ContainsKey(characterName) || Roles.ContainsKey(characterName) || Qoutes.ContainsKey(characterName))
                         {
-                            Console.WriteLine("Character is empty");
+                            Console.WriteLine("Character name should not be empty!");
                         }
-                        else if (Movies.ContainsKey(characterName))
+                        else if (string.IsNullOrWhiteSpace(characterName))
                         {
-                            Console.WriteLine("No character duplication!");
+                            Console.WriteLine("No character name duplication!");
                         }
-                        else
+                        else 
                         {
                             Console.Write("Enter movie title: ");
-                            string movieTitle = Console.ReadLine();    
-                            Movies.Add(characterName, movieTitle); 
+                            string movieTitle = Console.ReadLine();
+                            Movies.Add(characterName, movieTitle);
+                            
+                            Console.Write("Enter character role: ");
+                            string characterRole = Console.ReadLine();
+                            Roles.Add(characterName, characterRole);
+
+                            Console.Write("Enter signature qoute: ");
+                            string signatureQoute = Console.ReadLine();
+                            Qoutes.Add(characterName, signatureQoute);
+
+                            Console.WriteLine("Character has been added succesfully!");
                         }
-                        Console.Write("Enter character role: ");
-                        string characterRole = Console.ReadLine();
-
-                        Console.Write("Enter signature qoute: ");
-                        string signatureQoute = Console.ReadLine();
-
-                        Movies.Add(characterName, characterRole);
-                        Movies.Add(characterName,signatureQoute);
-                        Console.WriteLine("Character has been added succesfully!");
+                        
                         break;
 
                         
@@ -77,23 +79,26 @@ namespace Solis_Problem1
                       //  break;
 
                    // case 3:
-                       // if (myRec.Count == 0)
-                       // {
-                         //   Console.WriteLine("No Data in the Record Keeping System");
-                       // }
-                       // else
-                       // {
-                           // Console.WriteLine("\t-Key\t-Value-");
-                           // foreach (KeyValuePair<int, string> i in myD)
-                           // {
-                           //     Console.WriteLine($"\t{i.Key}\t{i.Value}");
-                          //  }
-                        //}
+                       
                         // break;
 
                     case 4:
 
                         return;
+                    case 5:
+                        if (Movies.Count == 0)
+                        {
+                            Console.WriteLine("No Data in the Record Keeping System");
+                        }
+                        else
+                        {
+                            Console.WriteLine("\t-Key\t-Value-");
+                            foreach (KeyValuePair<string, string> i in Movies)
+                            {
+                                Console.WriteLine($"\t{i.Key}\t{i.Value}");
+                            }
+                        }
+                        break;
 
                 }
                 Console.ReadKey();
