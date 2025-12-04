@@ -12,12 +12,12 @@ namespace Solis_Problem1
     {
         static void Main(string[] args)
         {
+            Dictionary<string, string> Movies = new Dictionary<string, string>();    
+            Dictionary<string, string> Roles = new Dictionary<string, string>();
+            Dictionary<string, string> Qoutes = new Dictionary<string, string>();
+           
             while (true)
             {
-                Dictionary<string, string> Movies = new Dictionary<string, string>();
-                Dictionary<string, string> Roles = new Dictionary<string, string>();
-                Dictionary<string, string> Qoutes = new Dictionary<string, string>();
-
                 Console.WriteLine("WELCOME TO MY DISNEY MOVIE CHARACTER TRACKING SYSTEM!");
                 Console.WriteLine("1-Add Character");
                 Console.WriteLine("2-Edit Character");
@@ -32,40 +32,102 @@ namespace Solis_Problem1
                 switch (choice)
                 {
                     case 1:
+                        if (Movies.Count == 0)
+                        {
+                            Console.WriteLine("No Data in the Record Keeping System");
+                        }
+                        else
+                        {
+                            Console.WriteLine("\t-Character Name\t-Movie Title-\t-Character Role-\t-Signature Qoute");
+                            foreach (KeyValuePair<string, string> i in Movies)
+
+                               {
+                                 Console.WriteLine($"\t{i.Key}\t{i.Value}");
+                               }
+                        }
+                        break;
+                    case 2:
                         Console.Write("Enter character name: ");
                         string characterName = Console.ReadLine();
 
-                        if (Movies.ContainsKey(characterName) || Roles.ContainsKey(characterName) || Qoutes.ContainsKey(characterName))
+                        if (string.IsNullOrWhiteSpace(characterName))
                         {
                             Console.WriteLine("Character name should not be empty!");
                         }
-                        else if (string.IsNullOrWhiteSpace(characterName))
+                        else if (Movies.ContainsKey(characterName) || Roles.ContainsKey(characterName) || Qoutes.ContainsKey(characterName))
                         {
                             Console.WriteLine("No character name duplication!");
                         }
-                        else 
+                        else
                         {
-                            Console.Write("Enter movie title: ");
-                            string movieTitle = Console.ReadLine();
-                            Movies.Add(characterName, movieTitle);
-                            
-                            Console.Write("Enter character role: ");
-                            string characterRole = Console.ReadLine();
-                            Roles.Add(characterName, characterRole);
+                            while (true)
+                            {
+                                Console.Write("Enter movie title: ");
+                                string movieTitle = Console.ReadLine();
 
-                            Console.Write("Enter signature qoute: ");
-                            string signatureQoute = Console.ReadLine();
-                            Qoutes.Add(characterName, signatureQoute);
+                                if (string.IsNullOrWhiteSpace(movieTitle))
+                                {
+                                    Console.WriteLine("Movie title name should not be empty!");
+                                   
+                                }
+                                else
+                                {
+                                    Movies.Add(characterName, movieTitle);
+                                    break;
+                                }
+                            }
+                                while (true)
+                                {
+                                    Console.Write("Enter character role: ");
+                                    string characterRole = Console.ReadLine().ToUpper(); // I asked Marcus on how to accept the user typed info if its in small case where the code only accepts first letter in upper case.
 
-                            Console.WriteLine("Character has been added succesfully!");
-                        }
+                                    if (characterRole == "PROTAGONIST" || characterRole == "SIDEKICK" || characterRole == "ANTAGONIST" || characterRole == "SUPPORTING")
+                                    {
+                                        Roles.Add(characterName, characterRole);
+                                          
+                                           while (true)
+                                           {
+                                                Console.Write("Enter signature qoute: ");
+                                                string signatureQoute = Console.ReadLine();
+
+                                               if (string.IsNullOrWhiteSpace(signatureQoute))
+                                               {
+                                                  Console.WriteLine("Signature Qoute should not be empty!");
+                                               }
+                                               else
+                                               {
+                                                  Qoutes.Add(characterName, signatureQoute);
+
+                                                  Console.WriteLine("Character has been added succesfully!");
+                                                  break;
+                                               }
+                                           }
+                                    break;
+                                }
+                                    else if (string.IsNullOrWhiteSpace(characterRole))
+                                    {
+                                        Console.WriteLine("Character Role should not be empty!");
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Character should only be [Protagonist][Sidekick][Antagonist][Supporting]");
+                                    }
+                                    
+                                }
+                            }  
                         
-                        break;
+                     break;
 
-                        
-                    //case 2:
-                        Console.Write("Enter character name to remove: ");
-                        string characterNameRemove = Console.ReadLine();
+
+
+
+
+
+}
+
+                        //case 2:
+                       // Console.Write("Enter character name to remove: ");
+                       // string characterNameRemove = Console.ReadLine();
 
                        // if (myRec.ContainsKey(key))
                      //   {
@@ -82,23 +144,12 @@ namespace Solis_Problem1
                        
                         // break;
 
-                    case 4:
+                   // case 4:
 
-                        return;
-                    case 5:
-                        if (Movies.Count == 0)
-                        {
-                            Console.WriteLine("No Data in the Record Keeping System");
-                        }
-                        else
-                        {
-                            Console.WriteLine("\t-Key\t-Value-");
-                            foreach (KeyValuePair<string, string> i in Movies)
-                            {
-                                Console.WriteLine($"\t{i.Key}\t{i.Value}");
-                            }
-                        }
-                        break;
+                     //   return;
+                   // case 5:
+                   //    
+                       // break;
 
                 }
                 Console.ReadKey();
@@ -106,4 +157,4 @@ namespace Solis_Problem1
         }
     }
     
-}
+
