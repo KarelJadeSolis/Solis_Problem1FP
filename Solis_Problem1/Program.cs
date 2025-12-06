@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Lifetime;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,27 +15,30 @@ namespace Solis_Problem1
         {
             Dictionary<string, string> Movies = new Dictionary<string, string>();    
             Dictionary<string, string> Roles = new Dictionary<string, string>();
-            Dictionary<string, string> Qoutes = new Dictionary<string, string>();
+            Dictionary<string, string> Quotes = new Dictionary<string, string>();
             
-            int choice; // I asked AI on how to validate the user input(choice) if its in null or white space so the program wouldn't crash after using a data type int where in,
-                        // it suggested me to do int.tryparse method and I asked how to use it.
+            int choice; // I asked AI on how to validate the user input(choice) if its in null or white space so the program wouldn't crash after using a data type int.                   
                       
             while (true)
             {
+                Console.WriteLine("");
                 Console.WriteLine("WELCOME TO MY DISNEY MOVIE CHARACTER TRACKING SYSTEM!");
+                Console.WriteLine("NOTE: Please capitalize the first letter of each name, title, and role when entering or viewing information.");
                 Console.WriteLine("1-Display Character");
                 Console.WriteLine("2-Add Character");
                 Console.WriteLine("3-Edit Character");
                 Console.WriteLine("4-Remove Character");
                 Console.WriteLine("5-Search Character");
-                Console.WriteLine("6-EXIT SYSTEM");
+                Console.WriteLine("6-Exit System");
+                Console.WriteLine("");
+               
 
                 Console.Write("Enter your choice: ");
                 string input = Console.ReadLine();
 
                 if (int.TryParse(input, out choice))
                 {
-                    if (choice >= 1 || choice <= 6)
+                    if (choice >= 1 && choice <= 6)
                     {
                         switch (choice)
                         {
@@ -42,41 +46,43 @@ namespace Solis_Problem1
 
                                 if (Movies.Count == 0)
                                 {
-                                    Console.WriteLine("No Disney Movie in the Character Tracking System!");
+                                    Console.WriteLine("There is no Disney Movie Character List in the Character Tracking System!");
+                                    Console.WriteLine("Press enter to return to the menu........");
+                                    Console.ReadKey();
                                 }
                                 else
                                 {
-
+                                    Console.WriteLine("");
+                                    Console.WriteLine("DISNEY MOVIE CHARACTER LIST:");
+                                    Console.WriteLine("---------------------------------------------");
                                     foreach (KeyValuePair<string, string> k in Movies)
-                                    {
-                                        Console.WriteLine($"Character Name: {k.Key}\n" +
-                                                          $"Movie Title: {k.Value}");
-                                    }
+                                    {     
+                                         string name = k.Key;
+                                         string title = k.Value;
+                                         string role = Roles.ContainsKey(name) ? Roles[name] : "N/A"; // I asked AI on how to print the role and signature qoute.
+                                         string quote = Quotes.ContainsKey(name) ? Quotes[name] : "N/A";
 
-                                    foreach (KeyValuePair<string, string> j in Roles)
-
-                                    {
-                                        Console.WriteLine($"Character Role: {j.Value}");
+                                        Console.WriteLine($"Character Name: {name}\n" +
+                                                          $"Movie Title: {title}\n" +
+                                                          $"Character Role: {role}\n" +
+                                                          $"Signature Quote: {quote}\n");
                                     }
-
-                                    foreach (KeyValuePair<string, string> s in Qoutes)
-                                    {
-                                        Console.WriteLine($"Signature Qoute: {s.Value}");
-                                    }
+                                    Console.WriteLine("Press enter to return to the menu........");
+                                    Console.ReadKey();
                                 }
                                 break;
 
-                            case 2:
+                            case 2:        
                                 Console.Write("Enter character name: ");
                                 string characterName = Console.ReadLine();
-
+                                
                                 if (string.IsNullOrWhiteSpace(characterName))
                                 {
-                                    Console.WriteLine("Character name should not be empty!");
+                                    Console.WriteLine("Character name cannot be empty. Please enter again.");
                                 }
-                                else if (Movies.ContainsKey(characterName) || Roles.ContainsKey(characterName) || Qoutes.ContainsKey(characterName))
+                                else if (Movies.ContainsKey(characterName))
                                 {
-                                    Console.WriteLine("No character name duplication!");
+                                    Console.WriteLine("No character name duplication! Please enter again.");
                                 }
                                 else
                                 {
@@ -87,7 +93,7 @@ namespace Solis_Problem1
 
                                         if (string.IsNullOrWhiteSpace(movieTitle))
                                         {
-                                            Console.WriteLine("Movie title name should not be empty!");
+                                            Console.WriteLine("Movie title name cannot be empty. Please enter again.");
 
                                         }
                                         else
@@ -98,50 +104,120 @@ namespace Solis_Problem1
                                     }
                                     while (true)
                                     {
-                                        Console.Write("Enter character role: ");
-                                        string characterRole = Console.ReadLine().ToUpper();
+                                        Console.Write("Enter character role (Protagonist, Antagonist, Sidekick, Supporting): ");
+                                        string characterRole = Console.ReadLine();
 
-                                        if (characterRole == "PROTAGONIST" || characterRole == "SIDEKICK" || characterRole == "ANTAGONIST" || characterRole == "SUPPORTING")
+                                        if (characterRole == "Protagonist" || characterRole == "Sidekick" || characterRole == "Antagonist" || characterRole == "Supporting")
                                         {
                                             Roles.Add(characterName, characterRole);
 
                                             while (true)
-                                            {
-                                                Console.Write("Enter signature qoute: ");
-                                                string signatureQoute = Console.ReadLine();
-
-                                                if (string.IsNullOrWhiteSpace(signatureQoute))
                                                 {
-                                                    Console.WriteLine("Signature Qoute should not be empty!");
-                                                }
-                                                else
-                                                {
-                                                    Qoutes.Add(characterName, signatureQoute);
+                                                    Console.Write("Enter signature quote: ");
+                                                    string signatureQoute = Console.ReadLine();
 
-                                                    Console.WriteLine("Character has been added succesfully!");
+                                                    if (string.IsNullOrWhiteSpace(signatureQoute))
+                                                    {
+                                                        Console.WriteLine("Signature Quote cannot be empty. Please enter again.");
+                                                    }
+                                                    else
+                                                    {
+                                                        Quotes.Add(characterName, signatureQoute);
+                                                        Console.WriteLine("Character has been added successfully!");
+                                                        Console.WriteLine("Press enter to return to the menu........");
+                                                        Console.ReadKey();
                                                     break;
-                                                }
+                                                    }
                                             }
                                             break;
                                         }
                                         else if (string.IsNullOrWhiteSpace(characterRole))
                                         {
-                                            Console.WriteLine("Character Role should not be empty!");
+                                            Console.WriteLine("Character Role cannot be empty! Please enter again.");
                                         }
                                         else
                                         {
-                                            Console.WriteLine("Character should only be [Protagonist][Sidekick][Antagonist][Supporting]");
+                                            Console.WriteLine("Character Role should only be [Protagonist][Sidekick][Antagonist][Supporting].");
                                         }
                                     }
                                 }
                                 break;
 
                             case 3:
+                                while (true)
+                                {
+                                    if (Movies.Count == 0)
+                                    {
+                                        Console.WriteLine("There is no Disney Movie Character List in the Character Tracking System!");
+                                        Console.WriteLine("Press enter to return to the menu........");
+                                        Console.ReadKey();
+                                        break;
+                                    }
+
+                                    Console.Write("Enter character name to edit: ");
+                                    string characterToEdit = Console.ReadLine();
+
+                                    if (string.IsNullOrWhiteSpace(characterToEdit))
+                                    {
+                                        Console.WriteLine("Invalid input! Character name cannot be empty. Please enter again.");
+                                    }
+                                    else if (!Movies.ContainsKey(characterToEdit))
+                                    {
+                                    Console.WriteLine("The character name does not exist in the tracking system.");
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Editing Character: " + characterToEdit);
+
+                                        Console.Write($"Enter new movie title: ");
+                                        string newTitle = Console.ReadLine();
+                                        if (!string.IsNullOrWhiteSpace(newTitle))
+                                        {
+                                            Movies[characterToEdit] = newTitle; // I asked AI how to edit the movie, role, and qoute in Dictionary when it is a pair of key and value.
+                                        }
+
+                                        Console.Write($"Enter new character role (Protagonist, Antagonist, Sidekick, Supporting): ");
+                                        string newRole = Console.ReadLine();
+                                        
+                                        if (!string.IsNullOrWhiteSpace(newRole))
+                                        {
+                                            if (newRole == "Protagonist" || newRole == "Antagonist" || newRole == "Sidekick" || newRole == "Supporting")
+                                            {
+                                                Roles[characterToEdit] = newRole;
+                                            }
+                                            else
+                                            {
+                                                Console.WriteLine("Invalid role! Keeping the previous role.");
+                                            }
+                                        }
+
+                                        Console.Write($"Enter new signature quote: ");
+                                        string newQoute = Console.ReadLine();
+                                        if (!string.IsNullOrWhiteSpace(newQoute))
+                                        {
+                                            Quotes[characterToEdit] = newQoute;
+                                        }
+
+                                        Console.WriteLine("Character information has been updated!");
+                                        Console.WriteLine("Press enter to return to the menu........");
+                                        Console.ReadKey();
+                                        break;
+                                    }
+                                    
+                                }
                                 break;
 
                             case 4:
                                 while (true)
                                 {
+                                    if (Movies.Count == 0)
+                                    {
+                                        Console.WriteLine("There is no Disney Movie Character List in the Character Tracking System!");
+                                        Console.WriteLine("Press enter to return to the menu........");
+                                        Console.ReadKey();
+                                        break;
+                                    }
+
                                     Console.Write("Enter character name to remove: ");
                                     string characterNameRemove = Console.ReadLine();
 
@@ -149,34 +225,81 @@ namespace Solis_Problem1
                                     {
                                         Movies.Remove(characterNameRemove);
                                         Roles.Remove(characterNameRemove);
-                                        Qoutes.Remove(characterNameRemove);
-                                        Console.WriteLine("Disney Character has been succesfully removed");
+                                        Quotes.Remove(characterNameRemove);
+                                        Console.WriteLine("Disney Character has been succesfully removed.");
+                                        Console.WriteLine("Press enter to return to the menu........");
+                                        Console.ReadKey();
+                                        break;
                                     }
                                     else if (string.IsNullOrWhiteSpace(characterNameRemove))
                                     {
-                                        Console.WriteLine("Enter character name to remove.");
+                                        Console.WriteLine("Invalid input! Character name cannot be empty.");
                                     }
                                     else
                                     {
-                                        Console.WriteLine("The Disney Character does not exist");
+                                        Console.WriteLine("The Disney Character name does not exist.");
                                     }
                                 }
-                                break;
+                            break;
+
+                            case 5:
+                                while (true) 
+                                {
+                                    if (Movies.Count == 0)
+                                    {
+                                        Console.WriteLine("There is no Disney Movie Character List in the Character Tracking System!");
+                                        Console.WriteLine("Press enter to return to the menu........");
+                                        Console.ReadKey();
+                                        break;
+                                    }
+
+                                    Console.Write("Enter character name to search: ");
+                                    string characterNameSearch = Console.ReadLine();
+
+                                    if (Movies.ContainsKey(characterNameSearch))
+                                    {
+                                        Console.WriteLine("Here is the information below: ");
+                                        Console.WriteLine("");
+                                            string title = Movies[characterNameSearch];// I asked AI how to get movie title.
+                                            string role = Roles.ContainsKey(characterNameSearch) ? Roles[characterNameSearch] : "N/A"; 
+                                            string quote = Quotes.ContainsKey(characterNameSearch) ? Quotes[characterNameSearch] : "N/A";
+
+                                            Console.WriteLine($"Character Name: {characterNameSearch}\n" +
+                                                              $"Movie Title: {title}\n" +
+                                                              $"Character Role: {role}\n" +
+                                                              $"Signature Quote: {quote}\n");
+                                            Console.WriteLine("");
+                                            Console.WriteLine("Press enter to return to the menu........");
+                                            Console.ReadKey();
+                                            break;
+                                    }
+                                    else if (string.IsNullOrWhiteSpace(characterNameSearch))
+                                    {
+                                        Console.WriteLine("Invalid input! Character name cannot be empty. Please enter again.");
+                                        continue;
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("The character name you have entered does not exist in the tracking system.");
+                                    }
+                                        
+                                }             
+                            break;
 
                             case 6:
-                                Console.WriteLine("Exiting the system. Thankyou!");
+                                Console.WriteLine("Exiting the system. Thank you!");
                                 return;
                         }
 
                     }
                     else
                     {
-                        Console.WriteLine("Invalid! Please enter a number between 1 and 6.");
+                        Console.WriteLine("Invalid input! Please enter a number between 1 and 6.");
                     }
                 }
                 else 
                 { 
-                    Console.WriteLine("Invalid input! Please enter a valid number.");
+                    Console.WriteLine("Invalid input! Please enter a number.");
                 }
                 
             }
