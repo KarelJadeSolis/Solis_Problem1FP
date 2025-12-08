@@ -48,7 +48,7 @@ namespace Solis_Problem1
                                 {
                                     Console.WriteLine("There is no Disney Movie Character List in the Character Tracking System!");
                                     Console.WriteLine("Press enter to return to the menu........");
-                                    Console.ReadKey();
+                                    Console.ReadKey(); // I asked AI on how to pause the console until user presses a key.
                                 }
                                 else
                                 {
@@ -59,7 +59,7 @@ namespace Solis_Problem1
                                     {     
                                          string name = k.Key;
                                          string title = k.Value;
-                                         string role = Roles.ContainsKey(name) ? Roles[name] : "N/A"; // I asked AI on how to print the role and signature qoute.
+                                         string role = Roles.ContainsKey(name) ? Roles[name] : "N/A"; // I asked AI on how to get the value of a dictionary in order to print the role and signature qoute.
                                          string quote = Quotes.ContainsKey(name) ? Quotes[name] : "N/A";
 
                                         Console.WriteLine($"Character Name: {name}\n" +
@@ -137,7 +137,7 @@ namespace Solis_Problem1
                                         }
                                         else
                                         {
-                                            Console.WriteLine("Character Role should only be [Protagonist][Sidekick][Antagonist][Supporting].");
+                                            Console.WriteLine("Character Role should only be [Protagonist][Sidekick][Antagonist][Supporting]. Please capitalize first letter.");
                                         }
                                     }
                                 }
@@ -173,7 +173,7 @@ namespace Solis_Problem1
                                         string newTitle = Console.ReadLine();
                                         if (!string.IsNullOrWhiteSpace(newTitle))
                                         {
-                                            Movies[characterToEdit] = newTitle; // I asked AI how to edit the movie, role, and qoute in Dictionary when it is a pair of key and value.
+                                            Movies[characterToEdit] = newTitle; 
                                         }
 
                                         Console.Write($"Enter new character role (Protagonist, Antagonist, Sidekick, Supporting): ");
@@ -190,12 +190,20 @@ namespace Solis_Problem1
                                                 Console.WriteLine("Invalid role! Keeping the previous role.");
                                             }
                                         }
+                                        else
+                                        {
+                                            Console.WriteLine("Role cannot be empty! Keeping the previous role.");
+                                        }
 
                                         Console.Write($"Enter new signature quote: ");
                                         string newQoute = Console.ReadLine();
                                         if (!string.IsNullOrWhiteSpace(newQoute))
                                         {
                                             Quotes[characterToEdit] = newQoute;
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("Signature Qoute cannot be empty! Keeping the previous signature qoute.");
                                         }
 
                                         Console.WriteLine("Character information has been updated!");
@@ -260,7 +268,7 @@ namespace Solis_Problem1
                                     {
                                         Console.WriteLine("Here is the information below: ");
                                         Console.WriteLine("");
-                                            string title = Movies[characterNameSearch];// I asked AI how to get movie title.
+                                            string title = Movies[characterNameSearch];
                                             string role = Roles.ContainsKey(characterNameSearch) ? Roles[characterNameSearch] : "N/A"; 
                                             string quote = Quotes.ContainsKey(characterNameSearch) ? Quotes[characterNameSearch] : "N/A";
 
