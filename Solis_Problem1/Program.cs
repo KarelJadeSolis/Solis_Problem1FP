@@ -268,7 +268,7 @@ namespace Solis_Problem1
                                     {
                                         Console.WriteLine("Here is the information below: ");
                                         Console.WriteLine("");
-                                            string title = Movies[characterNameSearch];
+                                            string title = Movies[characterNameSearch]; //I asked AI on how to print it again in order to not crash when a key gets modified.
                                             string role = Roles.ContainsKey(characterNameSearch) ? Roles[characterNameSearch] : "N/A"; 
                                             string quote = Quotes.ContainsKey(characterNameSearch) ? Quotes[characterNameSearch] : "N/A";
 
