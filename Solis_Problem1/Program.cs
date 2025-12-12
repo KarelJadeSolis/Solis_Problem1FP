@@ -295,7 +295,7 @@ namespace Solis_Problem1
                             break;
 
                             case 6:
-                                Console.WriteLine("Exiting the system. Thank you!");
+                                Console.WriteLine("Exited the system. Thank you!");
                                 return;
                         }
 
